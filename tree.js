@@ -247,7 +247,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 }
 
 console.log('Creating Random Tree');
-tree = new Tree((randomArray()));
+let tree = new Tree((randomArray()));
 prettyPrint(tree.root);
 console.log('is tree balanced?: ', tree.isBalanced());
 console.log('level order: ', tree.levelOrder());
