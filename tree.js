@@ -212,7 +212,6 @@ class Tree {
     isBalanced() {
         let leftHeight = this.height(this.root.left);
         let rightHeight = this.height(this.root.right);
-        console.log(`left: ${leftHeight}, right: ${rightHeight}`);
         if (leftHeight - rightHeight > 1 || rightHeight - leftHeight > 1)
             return false;
         return true;
