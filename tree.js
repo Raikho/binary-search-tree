@@ -46,6 +46,7 @@ class Tree {
             }
         }
     }
+
     removeDuplicates(array) {
         // Works for sorted arrays
         for (let i = 0; i < array.length - 1;) {
@@ -143,6 +144,21 @@ class Tree {
         }
         return `${value} was not found.`;
     }
+
+    levelOrder(callback = x => x) {
+        let queue = [this.root];
+        let output = [];
+
+        while (queue.length) {
+            let node = queue.shift();
+            if (node.left)
+                queue.push(node.left);
+            if (node.right)
+                queue.push(node.right);
+            output.push(callback(node.data));
+        }
+        return output;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -171,3 +187,6 @@ tree.delete(67);
 prettyPrint(tree.root);
 
 console.log('finding 23: ', tree.find(23));
+
+console.log('level order without inputting a function: ', tree.levelOrder());
+console.log('level order inputting a doubling function: ', tree.levelOrder(x => 2*x));
