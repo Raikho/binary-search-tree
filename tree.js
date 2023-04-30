@@ -125,6 +125,24 @@ class Tree {
             node.data = nextBiggest.data;
         }
     }
+
+    find(value) {
+        let node = this.root;
+        while (true) {
+            if (value > node.data) {
+                if (node.right)
+                    node = node.right;
+                else break;
+            }
+            else if (value < node.data) {
+                if (node.left)
+                    node = node.left;
+                else break;
+            }
+            else return node;
+        }
+        return `${value} was not found.`;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -151,3 +169,5 @@ prettyPrint(tree.root);
 console.log('deleting 67...');
 tree.delete(67);
 prettyPrint(tree.root);
+
+console.log('finding 23: ', tree.find(23));
