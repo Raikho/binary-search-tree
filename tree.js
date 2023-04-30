@@ -159,6 +159,25 @@ class Tree {
         }
         return output;
     }
+
+    inorder(callback = x => x, node = this.root, array = []) {
+        if (node.left) this.inorder(callback, node.left, array);
+        array.push(callback(node.data));
+        if (node.right) this.inorder(callback, node.right, array);
+        return array;
+    }
+    preorder(callback = x => x, node = this.root, array = []) {
+        array.push(callback(node.data));
+        if (node.left) this.preorder(callback, node.left, array);
+        if (node.right) this.preorder(callback, node.right, array);
+        return array;
+    }
+    postorder(callback = x => x, node = this.root, array = []) {
+        if (node.left) this.postorder(callback, node.left, array);
+        if (node.right) this.postorder(callback, node.right, array);
+        array.push(callback(node.data));
+        return array;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -188,5 +207,9 @@ prettyPrint(tree.root);
 
 console.log('finding 23: ', tree.find(23));
 
-console.log('level order without inputting a function: ', tree.levelOrder());
+console.log('level order w/out a function: ', tree.levelOrder());
 console.log('level order inputting a doubling function: ', tree.levelOrder(x => 2*x));
+
+console.log('inorder w/out a function: ', tree.inorder());
+console.log('preorder w/out a function: ', tree.preorder());
+console.log('postorder w/out a function: ', tree.postorder());
