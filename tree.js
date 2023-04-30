@@ -10,11 +10,8 @@ class Tree {
     constructor(array) {
         this.root = new Node();
 
-        console.log(array); // DEBUG
         this.sort(array);
-        console.log(array); // DEBUG
         this.removeDuplicates(array);
-        console.log(array); // DEBUG
 
         this.buildTree(array, this.root);
     }
@@ -50,6 +47,7 @@ class Tree {
         }
     }
     removeDuplicates(array) {
+        // Works for sorted arrays
         for (let i = 0; i < array.length - 1;) {
             let first = array[i];
             let second = array[i + 1];
@@ -58,6 +56,27 @@ class Tree {
             else
                 i++;
         }
+    }
+
+    insert(value, node = this.root) {
+        if (!node) this.root = new Node(value);
+
+        if (value > node.data) {
+            if (node.right)
+                this.insert(value, node.right);
+            else {
+                node.right = new Node(value);
+                return;
+            }
+        } else if (value < node.data) {
+            if (node.left)
+                this.insert(value, node.left);
+            else {
+                node.left = new Node(value);
+                return;
+            }
+        } else return;
+
     }
 }
 
@@ -76,5 +95,9 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 let array = [1,7,4,23,8,9,4,3,5,5,5,7,9,67,6345,324];
 let tree = new Tree(array);
-console.log(tree);
+prettyPrint(tree.root);
+
+console.log('inserting 6...');
+tree.insert(6);
+
 prettyPrint(tree.root);
