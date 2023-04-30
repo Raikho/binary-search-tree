@@ -178,6 +178,37 @@ class Tree {
         array.push(callback(node.data));
         return array;
     }
+
+    height(node, height = {max: 0, steps: 0}) {
+        if (!node.left && !node.right)
+            if (height.steps >= height.max)
+                height.max = height.steps;
+
+        if (node.left) {
+            height.steps++;
+            this.height(node.left, height);
+            height.steps--;
+        }
+        if (node.right) {
+            height.steps++;
+            this.height(node.right, height);
+            height.steps--;
+        }
+
+        return height.max;
+    }
+
+    depth(node, depth = {value: 0}, currentNode = this.root) {
+        if (node.data > currentNode.data) {
+            depth.value++;
+            this.depth(node, depth, currentNode.right);
+        }
+        else if (node.data < currentNode.data) {
+            depth.value++;
+            this.depth(node, depth, currentNode.left);
+        }
+        return depth.value;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -213,3 +244,9 @@ console.log('level order inputting a doubling function: ', tree.levelOrder(x => 
 console.log('inorder w/out a function: ', tree.inorder());
 console.log('preorder w/out a function: ', tree.preorder());
 console.log('postorder w/out a function: ', tree.postorder());
+
+console.log('height of 3: ', tree.height(tree.find(3)));
+console.log('height of 8: ', tree.height(tree.find(8)));
+console.log('depth of 6: ', tree.depth(tree.find(6)));
+console.log('deptht of 23: ', tree.depth(tree.find(23)));
+
