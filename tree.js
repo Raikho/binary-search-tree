@@ -76,7 +76,54 @@ class Tree {
                 return;
             }
         } else return;
+    }
 
+    delete(value) {
+        let node = this.root;
+        let parent = {};
+        while (value !== node.data) {
+            if (value > node.data) {
+                parent = {node: node, direction: 'right'}
+                node = node.right;
+            }
+            else if (value < node.data) {
+                parent = {node: node, direction: 'left'}
+                node = node.left;
+            }
+        }
+
+        if (!node.left && !node.right)
+            parent.node[parent.direction] = null;
+
+        else if (node.left && !node.right)
+            parent.node[parent.direction] = node.left;
+
+        else if (!node.left && node.right)
+            parent.node[parent.direction] = node.right;
+
+        else if (node.left && node.right) {
+            // find next biggest
+            console.log('node to delete: ', node);
+            let nextBiggestParent = null;
+            let nextBiggest = node.right;
+            while (nextBiggest.left) {
+                nextBiggestParent = nextBiggest;
+                nextBiggest = nextBiggest.left;
+            }
+
+            // if next biggest is the  direct child
+            if (!nextBiggestParent) {
+                node.data = nextBiggest.data;
+                node.right = null;
+                return;
+            }
+
+            // remove next biggest
+            nextBiggestParent.left = (nextBiggest.right) ? nextBiggest.right : null;
+
+            // replace original node with next biggest
+            node.data = nextBiggest.data;
+        }
     }
 }
 
@@ -99,5 +146,8 @@ prettyPrint(tree.root);
 
 console.log('inserting 6...');
 tree.insert(6);
+prettyPrint(tree.root);
 
+console.log('deleting 67...');
+tree.delete(67);
 prettyPrint(tree.root);
