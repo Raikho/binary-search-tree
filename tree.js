@@ -225,6 +225,14 @@ class Tree {
     }
 }
 
+function randomArray(length = 10, max = 100) {
+    let array = []
+    for (let i = 0; i < length; i++)
+        array.push(Math.round(Math.random() * max));
+    return array;
+}
+
+
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node === null) {
        return;
@@ -238,38 +246,25 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-let array = [1,7,4,23,8,9,4,3,5,5,5,7,9,67,6345,324];
-let tree = new Tree(array);
+console.log('Creating Random Tree');
+tree = new Tree((randomArray()));
 prettyPrint(tree.root);
-
-console.log('inserting 6...');
-tree.insert(6);
+console.log('is tree balanced?: ', tree.isBalanced());
+console.log('level order: ', tree.levelOrder());
+console.log('pre order: ', tree.preorder());
+console.log('in  order: ', tree.inorder());
+console.log('post order: ', tree.postorder());
+console.log('unbalancing...');
+tree.insert(120);
+tree.insert(140);
+tree.insert(160);
+tree.insert(180);
 prettyPrint(tree.root);
-
-console.log('deleting 67...');
-tree.delete(67);
-prettyPrint(tree.root);
-
-console.log('finding 23: ', tree.find(23));
-
-console.log('level order w/out a function: ', tree.levelOrder());
-console.log('level order inputting a doubling function: ', tree.levelOrder(x => 2*x));
-
-console.log('inorder w/out a function: ', tree.inorder());
-console.log('preorder w/out a function: ', tree.preorder());
-console.log('postorder w/out a function: ', tree.postorder());
-
-console.log('height of 3: ', tree.height(tree.find(3)));
-console.log('height of 8: ', tree.height(tree.find(8)));
-console.log('depth of 6: ', tree.depth(tree.find(6)));
-console.log('deptht of 23: ', tree.depth(tree.find(23)));
-
-console.log('inserting 0 & -1...');
-tree.insert(0);
-tree.insert(-1);
-prettyPrint(tree.root);
-console.log('is balanced?: ', tree.isBalanced());
+console.log('is tree balanced?: ', tree.isBalanced());
 console.log('balancing...');
 tree.rebalance();
 prettyPrint(tree.root);
-
+console.log('level order: ', tree.levelOrder());
+console.log('pre order: ', tree.preorder());
+console.log('in  order: ', tree.inorder());
+console.log('post order: ', tree.postorder());
