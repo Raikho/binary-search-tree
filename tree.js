@@ -197,7 +197,6 @@ class Tree {
 
         return height.max;
     }
-
     depth(node, depth = {value: 0}, currentNode = this.root) {
         if (node.data > currentNode.data) {
             depth.value++;
@@ -208,6 +207,21 @@ class Tree {
             this.depth(node, depth, currentNode.left);
         }
         return depth.value;
+    }
+
+    isBalanced() {
+        let leftHeight = this.height(this.root.left);
+        let rightHeight = this.height(this.root.right);
+        console.log(`left: ${leftHeight}, right: ${rightHeight}`);
+        if (leftHeight - rightHeight > 1 || rightHeight - leftHeight > 1)
+            return false;
+        return true;
+    }
+
+    rebalance() {
+        let array = this.inorder();
+        this.root = new Node();
+        this.buildTree(array, this.root);
     }
 }
 
@@ -249,4 +263,13 @@ console.log('height of 3: ', tree.height(tree.find(3)));
 console.log('height of 8: ', tree.height(tree.find(8)));
 console.log('depth of 6: ', tree.depth(tree.find(6)));
 console.log('deptht of 23: ', tree.depth(tree.find(23)));
+
+console.log('inserting 0 & -1...');
+tree.insert(0);
+tree.insert(-1);
+prettyPrint(tree.root);
+console.log('is balanced?: ', tree.isBalanced());
+console.log('balancing...');
+tree.rebalance();
+prettyPrint(tree.root);
 
